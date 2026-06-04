@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>EJE CLOUD IA — Configuración</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="seal">CM</div>
+      <div>
+        <h1>EJE CLOUD IA</h1>
+        <p>Consejo de la Magistratura — CABA</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Configuración de IA</h2>
+
+      <div class="form-group">
+        <label for="apiKey">API Key de Google Gemini</label>
+        <input type="password" id="apiKey" placeholder="AIza...">
+        <span class="hint">
+          Obtené tu clave gratuita en
+          <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>
+          → "Get API key" → "Create API key"
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="model">Modelo de Gemini</label>
+        <select id="model">
+          <option value="gemini-2.0-flash">gemini-2.0-flash (recomendado — rápido y gratuito)</option>
+          <option value="gemini-1.5-pro">gemini-1.5-pro (más potente)</option>
+          <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+        </select>
+      </div>
+
+      <div id="msg" class="msg" style="display:none;"></div>
+
+      <button class="btn-save" onclick="save()">Guardar configuración</button>
+    </div>
+
+    <div class="card">
+      <h2>Acerca de</h2>
+      <table class="info-table">
+        <tr><td>Extensión</td><td>EJE CLOUD IA v1.0.0</td></tr>
+        <tr><td>Organismo</td><td>Consejo de la Magistratura de la CABA</td></tr>
+        <tr><td>Motor IA</td><td>Google Gemini (Function Calling)</td></tr>
+        <tr><td>Integración</td><td>Lectura y control del DOM de EJE CLOUD</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

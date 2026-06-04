@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "EJE CLOUD IA — Magistratura CABA",
+  "version": "1.0.0",
+  "description": "Asistente de Inteligencia Artificial para EJE CLOUD del Consejo de la Magistratura de la CABA",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "EJE CLOUD IA",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "sidePanel",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://ejecloud.jusbaires.gob.ar/*",
+    "https://*.jusbaires.gob.ar/*"
+  ]
+}

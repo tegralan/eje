@@ -1,98 +1,68 @@
-# EJE CLOUD IA 🤖
+# EJE CLOUD IA — Extensión de Chrome
 
-Asistente de Inteligencia Artificial Generativa para **EJE CLOUD** del **Consejo de la Magistratura de la Ciudad Autónoma de Buenos Aires**.
+Extensión de Chrome con Inteligencia Artificial Generativa para **EJE CLOUD** del **Consejo de la Magistratura de la Ciudad Autónoma de Buenos Aires**.
 
 ## Funcionalidades
 
-- **💬 Chatbot / Asistente**: Consultas en lenguaje natural sobre EJE CLOUD
-- **🔍 Búsqueda semántica**: Búsqueda de expedientes, legajos y concursos por descripción
-- **📊 Análisis de datos**: Extracción y análisis de tablas y reportes del sistema
-- **📄 Generación de documentos**: Informes, notas, memos, resoluciones CM y dictámenes
+- **💬 Asistente IA**: Panel lateral que responde preguntas sobre lo que está en pantalla
+- **🔍 Lectura de página**: Lee y analiza el contenido de EJE CLOUD automáticamente
+- **📊 Extracción de datos**: Extrae tablas y datos estructurados de cualquier pantalla
+- **🖱 Automatización**: Hace clicks, completa formularios y navega dentro de EJE CLOUD
+- **📄 Generador de documentos**: Crea informes, notas, memos, resoluciones CM y dictámenes
 
-## Requisitos
+## Instalación
 
-- Python 3.10+
-- Cuenta de acceso a EJE CLOUD del Consejo de la Magistratura (`@jusbaires.gob.ar`)
-- API Key de Google Gemini (gratis en [aistudio.google.com](https://aistudio.google.com))
+### 1. Obtener API Key de Gemini (gratuita)
 
-## Instalación rápida
+1. Entrá a **[aistudio.google.com](https://aistudio.google.com)**
+2. "Get API key" → "Create API key"
+3. Copiá la clave (empieza con `AIza...`)
 
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/tegralan/eje.git
-cd eje
+### 2. Instalar la extensión en Chrome
 
-# 2. Instalar dependencias
-bash scripts/install.sh
+1. Abrí Chrome → `chrome://extensions`
+2. Activá **"Modo desarrollador"** (switch arriba a la derecha)
+3. Click en **"Cargar descomprimida"**
+4. Seleccioná la carpeta `extension/` de este repositorio
+5. La extensión aparece en la barra de Chrome
 
-# 3. Configurar variables de entorno
-cp .env.example .env
-# Editá .env con tu ANTHROPIC_API_KEY y credenciales de EJE CLOUD
+### 3. Configurar la API Key
 
-# 4. Iniciar la aplicación
-bash scripts/start.sh
-```
+1. Click derecho en el ícono de la extensión → **"Opciones"**
+2. Pegá tu API Key de Gemini
+3. Guardá
 
-Abrí tu navegador en `http://localhost:8000`
+### 4. Usar la extensión
 
-## Configuración (.env)
+1. Abrí **EJE CLOUD** (`ejecloud.jusbaires.gob.ar`) en Chrome
+2. Click en el ícono de la extensión → se abre el panel lateral
+3. Escribile al asistente lo que necesitás
 
-```
-GEMINI_API_KEY=AIza...                              # API Key de Google Gemini
-EJE_CLOUD_URL=https://ejecloud.jusbaires.gob.ar    # URL de EJE CLOUD
-EJE_CLOUD_USER=usuario@jusbaires.gob.ar            # Usuario EJE CLOUD
-EJE_CLOUD_PASSWORD=contraseña                       # Contraseña EJE CLOUD
-GEMINI_MODEL=gemini-2.0-flash                       # Modelo de IA
-BROWSER_HEADLESS=true                               # Modo sin ventana del navegador
-```
-
-## Arquitectura
+## Estructura
 
 ```
-app/
-├── main.py              # FastAPI entry point
-├── api/
-│   ├── chat.py          # API de chat con IA
-│   ├── documents.py     # Generador de documentos
-│   └── browser.py       # Control del navegador
-├── core/
-│   ├── claude_client.py # Cliente Claude + herramientas IA
-│   └── eje_browser.py   # Automatización Chrome/Playwright
-├── services/
-│   ├── ai_service.py    # Orquestación IA
-│   └── document_service.py  # Plantillas del Consejo de la Magistratura
-frontend/
-├── index.html           # Interfaz web
-├── css/style.css        # Estilos institucionales
-└── js/app.js            # Lógica frontend
+extension/
+├── manifest.json       # Configuración de la extensión (Manifest V3)
+├── background.js       # Service worker — llama a la API de Gemini
+├── content.js          # Script inyectado en EJE CLOUD — lee y controla el DOM
+├── sidepanel.html/js/css  # Panel lateral con el chat
+├── options.html/js/css    # Página de configuración (API Key)
+└── icons/              # Íconos de la extensión
 ```
 
-## Tipos de documentos soportados
+## Ejemplos de uso
 
-| Tipo | Descripción |
-|------|-------------|
-| `informe` | Informe técnico o administrativo |
-| `nota` | Nota oficial dirigida a un destinatario |
-| `memo` | Memorando interno |
-| `resolucion` | Resolución del Consejo de la Magistratura |
-| `dictamen` | Dictamen de asesoría o área competente |
-
-## API REST
-
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST | `/api/chat` | Chat con el asistente IA |
-| DELETE | `/api/chat/{id}` | Limpiar sesión |
-| POST | `/api/documentos` | Generar documento |
-| POST | `/api/documentos/preview` | Preview HTML del documento |
-| POST | `/api/browser/login` | Conectar a EJE CLOUD |
-| GET | `/api/browser/status` | Estado del navegador |
-
-Documentación interactiva: `http://localhost:8000/docs`
+```
+"Leé la página actual y decime qué expedientes aparecen"
+"Buscá el expediente CM-2024-12345"
+"Extraé los datos de la tabla y generá un informe"
+"Redactá un dictamen sobre la solicitud de licencia del agente"
+"Hacé click en el botón Guardar"
+```
 
 ## Tecnología
 
-- **Backend**: Python + FastAPI
-- **IA**: Gemini (Google) con Function Calling
-- **Navegador**: Playwright (Chromium) — automatización de EJE CLOUD
-- **Documentos**: Jinja2 + plantillas HTML institucionales
+- **Extensión**: Chrome Extension Manifest V3
+- **IA**: Google Gemini con Function Calling (via REST API)
+- **Integración**: Content script que lee/controla el DOM de EJE CLOUD directamente
+- **Sin servidor**: todo corre en el navegador, sin backend externo
