@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJE CLOUD IA — Ciudad de Buenos Aires</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Header GCBA -->
+    <header class="gcba-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="gcba-seal">
+                    <span>BA</span>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-main">EJE CLOUD IA</span>
+                    <span class="brand-sub">Gobierno de la Ciudad de Buenos Aires</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="btnLogin" title="Conectar a EJE CLOUD" onclick="openLoginModal()">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A8 8 0 1118.88 6.196M15 12H3m0 0l3-3m-3 3l3 3"/>
+                    </svg>
+                    Conectar
+                </button>
+                <div id="statusIndicator" class="status-dot offline" title="Sin conexión a EJE CLOUD"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Layout principal -->
+    <div class="app-layout">
+
+        <!-- Sidebar de navegación -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-tab="chat">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                    </svg>
+                    <span>Asistente IA</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="documentos">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>Documentos</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="ayuda">
+                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Ayuda</span>
+                </a>
+            </nav>
+
+            <!-- Accesos rápidos -->
+            <div class="sidebar-section">
+                <p class="sidebar-label">Consultas rápidas</p>
+                <button class="quick-btn" onclick="sendQuickQuery('¿Cómo busco un expediente en EJE CLOUD?')">🔍 Buscar expediente</button>
+                <button class="quick-btn" onclick="sendQuickQuery('¿Qué módulos tiene EJE CLOUD?')">📋 Módulos disponibles</button>
+                <button class="quick-btn" onclick="sendQuickQuery('Ayudame a generar un informe')">📄 Generar informe</button>
+                <button class="quick-btn" onclick="sendQuickQuery('Mostrá el estado del sistema EJE CLOUD')">📊 Estado del sistema</button>
+            </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+
+            <!-- Tab: Chat / Asistente -->
+            <div id="tab-chat" class="tab-content active">
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <!-- Mensaje de bienvenida -->
+                        <div class="message assistant">
+                            <div class="message-avatar">IA</div>
+                            <div class="message-body">
+                                <div class="message-bubble">
+                                    <p>¡Hola! Soy el asistente de Inteligencia Artificial de <strong>EJE CLOUD</strong> para el Gobierno de la Ciudad de Buenos Aires.</p>
+                                    <p>Puedo ayudarte a:</p>
+                                    <ul>
+                                        <li>🔍 <strong>Buscar</strong> expedientes y documentos</li>
+                                        <li>📊 <strong>Analizar</strong> datos del sistema</li>
+                                        <li>📄 <strong>Generar</strong> informes, notas y resoluciones</li>
+                                        <li>🤝 <strong>Guiarte</strong> en la plataforma EJE CLOUD</li>
+                                    </ul>
+                                    <p>Primero conectate a EJE CLOUD con el botón <em>"Conectar"</em> arriba, y luego escribime lo que necesitás.</p>
+                                </div>
+                                <span class="message-time">Ahora</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área de acciones del asistente -->
+                    <div id="actionsArea" class="actions-area" style="display:none;">
+                        <div class="actions-header">
+                            <span class="spinner"></span>
+                            <span id="actionsText">Procesando...</span>
+                        </div>
+                        <div id="actionsList" class="actions-list"></div>
+                    </div>
+
+                    <!-- Input de chat -->
+                    <div class="chat-input-area">
+                        <div class="chat-input-wrapper">
+                            <textarea
+                                id="chatInput"
+                                class="chat-input"
+                                placeholder="Escribí tu consulta sobre EJE CLOUD..."
+                                rows="1"
+                                onkeydown="handleKeyDown(event)"
+                                oninput="autoResize(this)"
+                            ></textarea>
+                            <button id="sendBtn" class="btn-send" onclick="sendMessage()" title="Enviar (Enter)">
+                                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="chat-footer">
+                            <button class="btn-ghost" onclick="clearChat()">🗑 Limpiar conversación</button>
+                            <span class="session-info" id="sessionInfo"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Generador de Documentos -->
+            <div id="tab-documentos" class="tab-content">
+                <div class="doc-generator">
+                    <h2 class="section-title">Generador de Documentos Oficiales</h2>
+                    <p class="section-desc">Creá documentos en formato oficial del GCBA usando Inteligencia Artificial.</p>
+
+                    <div class="doc-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tipo de documento</label>
+                                <select id="docTipo" class="form-control" onchange="updateDocPreview()">
+                                    <option value="informe">📋 Informe</option>
+                                    <option value="nota">📝 Nota</option>
+                                    <option value="memo">📨 Memorando</option>
+                                    <option value="resolucion">⚖️ Resolución</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Destinatario</label>
+                                <input type="text" id="docDestinatario" class="form-control" placeholder="Nombre del destinatario o área">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Asunto</label>
+                            <input type="text" id="docAsunto" class="form-control" placeholder="Asunto del documento">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Descripción del contenido</label>
+                            <textarea id="docDescripcion" class="form-control" rows="3" placeholder="Describí el contenido del documento o pegá los datos relevantes..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="generateDocumentWithAI()">
+                                ✨ Generar con IA
+                            </button>
+                            <button class="btn-secondary" onclick="generateDocumentDirect()">
+                                📄 Generar directo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preview del documento -->
+                    <div id="docPreviewContainer" class="doc-preview-container" style="display:none;">
+                        <div class="doc-preview-header">
+                            <h3>Vista previa del documento</h3>
+                            <div class="doc-preview-actions">
+                                <button class="btn-ghost" onclick="printDocument()">🖨 Imprimir</button>
+                                <button class="btn-ghost" onclick="copyDocumentHtml()">📋 Copiar HTML</button>
+                            </div>
+                        </div>
+                        <div id="docPreviewFrame" class="doc-preview-frame"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Ayuda -->
+            <div id="tab-ayuda" class="tab-content">
+                <div class="help-content">
+                    <h2 class="section-title">¿Cómo usar EJE CLOUD IA?</h2>
+
+                    <div class="help-grid">
+                        <div class="help-card">
+                            <div class="help-icon">🔌</div>
+                            <h3>1. Conectarse a EJE CLOUD</h3>
+                            <p>Hacé click en <strong>"Conectar"</strong> en el header e ingresá tus credenciales del sistema EJE CLOUD de la Ciudad.</p>
+                        </div>
+                        <div class="help-card">
+                            <div class="help-icon">💬</div>
+                            <h3>2. Hacé consultas</h3>
+                            <p>Escribí tu consulta en lenguaje natural. Por ejemplo: <em>"Buscá el expediente 12345-2024"</em> o <em>"¿Cuántos agentes hay en la repartición X?"</em></p>
+                        </div>
+                        <div class="help-card">
+                            <div class="help-icon">📄</div>
+                            <h3>3. Generá documentos</h3>
+                            <p>Usá la sección <strong>Documentos</strong> para crear informes, notas, memos y resoluciones en formato oficial del GCBA.</p>
+                        </div>
+                        <div class="help-card">
+                            <div class="help-icon">📊</div>
+                            <h3>4. Analizá datos</h3>
+                            <p>Pedile a la IA que analice información de EJE CLOUD. Puede extraer datos de tablas y generar resúmenes automáticos.</p>
+                        </div>
+                    </div>
+
+                    <div class="help-examples">
+                        <h3>Ejemplos de consultas</h3>
+                        <div class="examples-list">
+                            <div class="example-item" onclick="useExample(this)">
+                                <code>Buscá el expediente número 2024-10-12345-GCBA</code>
+                            </div>
+                            <div class="example-item" onclick="useExample(this)">
+                                <code>¿Cuál es el estado del módulo de RRHH?</code>
+                            </div>
+                            <div class="example-item" onclick="useExample(this)">
+                                <code>Generá un informe sobre los expedientes del mes</code>
+                            </div>
+                            <div class="example-item" onclick="useExample(this)">
+                                <code>Navegá a la sección de contrataciones y mostrame los últimos registros</code>
+                            </div>
+                            <div class="example-item" onclick="useExample(this)">
+                                <code>Redactá una nota para el área de presupuesto sobre la actualización de créditos</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-info">
+                        <h3>Información técnica</h3>
+                        <table class="info-table">
+                            <tr><td>Motor IA</td><td>Claude (Anthropic) — claude-sonnet-4-6</td></tr>
+                            <tr><td>Integración</td><td>EJE CLOUD via automatización de Chrome (Playwright)</td></tr>
+                            <tr><td>Documentos</td><td>Informe, Nota, Memorando, Resolución</td></tr>
+                            <tr><td>Backend</td><td>Python + FastAPI</td></tr>
+                            <tr><td>Versión</td><td>1.0.0</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Conectar a EJE CLOUD</h3>
+                <button class="modal-close" onclick="closeLoginModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Usuario (email GCBA)</label>
+                    <input type="email" id="loginUser" class="form-control" placeholder="usuario@buenosaires.gob.ar">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="loginPass" class="form-control" placeholder="••••••••">
+                </div>
+                <div id="loginError" class="alert alert-error" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeLoginModal()">Cancelar</button>
+                <button class="btn-primary" onclick="doLogin()" id="loginBtn">
+                    Ingresar a EJE CLOUD
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
