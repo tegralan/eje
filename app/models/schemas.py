@@ -30,6 +30,7 @@ class DocumentType(str, Enum):
     nota = "nota"
     resolucion = "resolucion"
     memo = "memo"
+    dictamen = "dictamen"
 
 
 class DocumentRequest(BaseModel):

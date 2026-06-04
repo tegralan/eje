@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EJE CLOUD IA — Ciudad de Buenos Aires</title>
+    <title>EJE CLOUD IA — Consejo de la Magistratura CABA</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -12,15 +12,15 @@
         <div class="header-inner">
             <div class="brand">
                 <div class="gcba-seal">
-                    <span>BA</span>
+                    <span>CM</span>
                 </div>
                 <div class="brand-text">
                     <span class="brand-main">EJE CLOUD IA</span>
-                    <span class="brand-sub">Gobierno de la Ciudad de Buenos Aires</span>
+                    <span class="brand-sub">Consejo de la Magistratura — CABA</span>
                 </div>
             </div>
             <div class="header-actions">
-                <button class="btn-icon" id="btnLogin" title="Conectar a EJE CLOUD" onclick="openLoginModal()">
+                <button class="btn-icon" id="btnLogin" title="Conectar a EJE CLOUD (jusbaires)" onclick="openLoginModal()">
                     <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A8 8 0 1118.88 6.196M15 12H3m0 0l3-3m-3 3l3 3"/>
                     </svg>
@@ -61,9 +61,9 @@
             <div class="sidebar-section">
                 <p class="sidebar-label">Consultas rápidas</p>
                 <button class="quick-btn" onclick="sendQuickQuery('¿Cómo busco un expediente en EJE CLOUD?')">🔍 Buscar expediente</button>
-                <button class="quick-btn" onclick="sendQuickQuery('¿Qué módulos tiene EJE CLOUD?')">📋 Módulos disponibles</button>
+                <button class="quick-btn" onclick="sendQuickQuery('¿Cómo consulto el legajo de un agente judicial?')">👤 Legajo de agente</button>
                 <button class="quick-btn" onclick="sendQuickQuery('Ayudame a generar un informe')">📄 Generar informe</button>
-                <button class="quick-btn" onclick="sendQuickQuery('Mostrá el estado del sistema EJE CLOUD')">📊 Estado del sistema</button>
+                <button class="quick-btn" onclick="sendQuickQuery('¿Qué concursos están abiertos en EJE CLOUD?')">⚖️ Concursos</button>
             </div>
         </aside>
 
@@ -79,15 +79,15 @@
                             <div class="message-avatar">IA</div>
                             <div class="message-body">
                                 <div class="message-bubble">
-                                    <p>¡Hola! Soy el asistente de Inteligencia Artificial de <strong>EJE CLOUD</strong> para el Gobierno de la Ciudad de Buenos Aires.</p>
+                                    <p>¡Hola! Soy el asistente de Inteligencia Artificial de <strong>EJE CLOUD</strong> del <strong>Consejo de la Magistratura de la CABA</strong>.</p>
                                     <p>Puedo ayudarte a:</p>
                                     <ul>
-                                        <li>🔍 <strong>Buscar</strong> expedientes y documentos</li>
-                                        <li>📊 <strong>Analizar</strong> datos del sistema</li>
-                                        <li>📄 <strong>Generar</strong> informes, notas y resoluciones</li>
+                                        <li>🔍 <strong>Buscar</strong> expedientes, legajos y concursos</li>
+                                        <li>📊 <strong>Analizar</strong> datos del sistema judicial</li>
+                                        <li>📄 <strong>Generar</strong> informes, notas, dictámenes y resoluciones</li>
                                         <li>🤝 <strong>Guiarte</strong> en la plataforma EJE CLOUD</li>
                                     </ul>
-                                    <p>Primero conectate a EJE CLOUD con el botón <em>"Conectar"</em> arriba, y luego escribime lo que necesitás.</p>
+                                    <p>Primero conectate a EJE CLOUD con el botón <em>"Conectar"</em> arriba (credenciales @jusbaires.gob.ar), y luego escribime lo que necesitás.</p>
                                 </div>
                                 <span class="message-time">Ahora</span>
                             </div>
@@ -142,7 +142,8 @@
                                     <option value="informe">📋 Informe</option>
                                     <option value="nota">📝 Nota</option>
                                     <option value="memo">📨 Memorando</option>
-                                    <option value="resolucion">⚖️ Resolución</option>
+                                    <option value="resolucion">⚖️ Resolución CM</option>
+                                    <option value="dictamen">📜 Dictamen</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -217,19 +218,19 @@
                         <h3>Ejemplos de consultas</h3>
                         <div class="examples-list">
                             <div class="example-item" onclick="useExample(this)">
-                                <code>Buscá el expediente número 2024-10-12345-GCBA</code>
+                                <code>Buscá el expediente número CM-2024-12345</code>
                             </div>
                             <div class="example-item" onclick="useExample(this)">
-                                <code>¿Cuál es el estado del módulo de RRHH?</code>
+                                <code>¿Cuál es el estado del módulo de RRHH del Poder Judicial?</code>
                             </div>
                             <div class="example-item" onclick="useExample(this)">
-                                <code>Generá un informe sobre los expedientes del mes</code>
+                                <code>Generá un informe sobre los expedientes administrativos del mes</code>
                             </div>
                             <div class="example-item" onclick="useExample(this)">
-                                <code>Navegá a la sección de contrataciones y mostrame los últimos registros</code>
+                                <code>¿Qué concursos de magistrados están activos en EJE CLOUD?</code>
                             </div>
                             <div class="example-item" onclick="useExample(this)">
-                                <code>Redactá una nota para el área de presupuesto sobre la actualización de créditos</code>
+                                <code>Redactá un dictamen sobre la solicitud de licencia del agente judicial</code>
                             </div>
                         </div>
                     </div>
@@ -239,7 +240,8 @@
                         <table class="info-table">
                             <tr><td>Motor IA</td><td>Claude (Anthropic) — claude-sonnet-4-6</td></tr>
                             <tr><td>Integración</td><td>EJE CLOUD via automatización de Chrome (Playwright)</td></tr>
-                            <tr><td>Documentos</td><td>Informe, Nota, Memorando, Resolución</td></tr>
+                            <tr><td>Organismo</td><td>Consejo de la Magistratura — CABA</td></tr>
+                            <tr><td>Documentos</td><td>Informe, Nota, Memorando, Resolución CM, Dictamen</td></tr>
                             <tr><td>Backend</td><td>Python + FastAPI</td></tr>
                             <tr><td>Versión</td><td>1.0.0</td></tr>
                         </table>
@@ -254,13 +256,13 @@
     <div id="loginModal" class="modal" style="display:none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Conectar a EJE CLOUD</h3>
+                <h3>Conectar a EJE CLOUD — Magistratura</h3>
                 <button class="modal-close" onclick="closeLoginModal()">✕</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Usuario (email GCBA)</label>
-                    <input type="email" id="loginUser" class="form-control" placeholder="usuario@buenosaires.gob.ar">
+                    <input type="email" id="loginUser" class="form-control" placeholder="usuario@jusbaires.gob.ar">
                 </div>
                 <div class="form-group">
                     <label>Contraseña</label>

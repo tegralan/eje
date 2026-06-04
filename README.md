@@ -1,18 +1,18 @@
 # EJE CLOUD IA 🤖
 
-Asistente de Inteligencia Artificial Generativa para **EJE CLOUD** del Gobierno de la Ciudad Autónoma de Buenos Aires.
+Asistente de Inteligencia Artificial Generativa para **EJE CLOUD** del **Consejo de la Magistratura de la Ciudad Autónoma de Buenos Aires**.
 
 ## Funcionalidades
 
 - **💬 Chatbot / Asistente**: Consultas en lenguaje natural sobre EJE CLOUD
-- **🔍 Búsqueda semántica**: Búsqueda de expedientes y documentos por descripción
+- **🔍 Búsqueda semántica**: Búsqueda de expedientes, legajos y concursos por descripción
 - **📊 Análisis de datos**: Extracción y análisis de tablas y reportes del sistema
-- **📄 Generación de documentos**: Informes, notas, memos y resoluciones en formato oficial GCBA
+- **📄 Generación de documentos**: Informes, notas, memos, resoluciones CM y dictámenes
 
 ## Requisitos
 
 - Python 3.10+
-- Cuenta de acceso a EJE CLOUD (GCBA)
+- Cuenta de acceso a EJE CLOUD del Consejo de la Magistratura (`@jusbaires.gob.ar`)
 - API Key de Anthropic (Claude)
 
 ## Instalación rápida
@@ -38,12 +38,12 @@ Abrí tu navegador en `http://localhost:8000`
 ## Configuración (.env)
 
 ```
-ANTHROPIC_API_KEY=sk-ant-...         # API Key de Anthropic
-EJE_CLOUD_URL=https://ejecloud...    # URL de EJE CLOUD GCBA
-EJE_CLOUD_USER=usuario@...           # Usuario EJE CLOUD
-EJE_CLOUD_PASSWORD=contraseña        # Contraseña EJE CLOUD
-CLAUDE_MODEL=claude-sonnet-4-6       # Modelo de IA
-BROWSER_HEADLESS=true                # Modo sin ventana del navegador
+ANTHROPIC_API_KEY=sk-ant-...              # API Key de Anthropic
+EJE_CLOUD_URL=https://ejecloud.jusbaires.gob.ar   # URL de EJE CLOUD
+EJE_CLOUD_USER=usuario@jusbaires.gob.ar   # Usuario EJE CLOUD
+EJE_CLOUD_PASSWORD=contraseña             # Contraseña EJE CLOUD
+CLAUDE_MODEL=claude-sonnet-4-6            # Modelo de IA
+BROWSER_HEADLESS=true                     # Modo sin ventana del navegador
 ```
 
 ## Arquitectura
@@ -60,12 +60,22 @@ app/
 │   └── eje_browser.py   # Automatización Chrome/Playwright
 ├── services/
 │   ├── ai_service.py    # Orquestación IA
-│   └── document_service.py  # Plantillas de documentos GCBA
+│   └── document_service.py  # Plantillas del Consejo de la Magistratura
 frontend/
 ├── index.html           # Interfaz web
-├── css/style.css        # Estilos GCBA
+├── css/style.css        # Estilos institucionales
 └── js/app.js            # Lógica frontend
 ```
+
+## Tipos de documentos soportados
+
+| Tipo | Descripción |
+|------|-------------|
+| `informe` | Informe técnico o administrativo |
+| `nota` | Nota oficial dirigida a un destinatario |
+| `memo` | Memorando interno |
+| `resolucion` | Resolución del Consejo de la Magistratura |
+| `dictamen` | Dictamen de asesoría o área competente |
 
 ## API REST
 
@@ -84,5 +94,5 @@ Documentación interactiva: `http://localhost:8000/docs`
 
 - **Backend**: Python + FastAPI
 - **IA**: Claude (Anthropic) con Tool Use
-- **Navegador**: Playwright (Chromium)
-- **Documentos**: Jinja2 templates HTML
+- **Navegador**: Playwright (Chromium) — automatización de EJE CLOUD
+- **Documentos**: Jinja2 + plantillas HTML institucionales
