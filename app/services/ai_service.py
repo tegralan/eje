@@ -5,7 +5,7 @@ import uuid
 import logging
 from typing import Optional
 
-from app.core.claude_client import chat_with_claude
+from app.core.ai_client import chat_with_gemini
 from app.core.eje_browser import get_browser
 from app.services.document_service import DocumentService
 from app.models.schemas import ChatResponse
@@ -42,7 +42,7 @@ async def process_chat(
         except Exception as e:
             logger.warning(f"No se pudo iniciar el navegador: {e}")
 
-    response_text, actions = await chat_with_claude(
+    response_text, actions = await chat_with_gemini(
         message=message,
         history=history,
         browser=browser,

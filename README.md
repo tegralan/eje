@@ -13,7 +13,7 @@ Asistente de Inteligencia Artificial Generativa para **EJE CLOUD** del **Consejo
 
 - Python 3.10+
 - Cuenta de acceso a EJE CLOUD del Consejo de la Magistratura (`@jusbaires.gob.ar`)
-- API Key de Anthropic (Claude)
+- API Key de Google Gemini (gratis en [aistudio.google.com](https://aistudio.google.com))
 
 ## Instalación rápida
 
@@ -38,12 +38,12 @@ Abrí tu navegador en `http://localhost:8000`
 ## Configuración (.env)
 
 ```
-ANTHROPIC_API_KEY=sk-ant-...              # API Key de Anthropic
-EJE_CLOUD_URL=https://ejecloud.jusbaires.gob.ar   # URL de EJE CLOUD
-EJE_CLOUD_USER=usuario@jusbaires.gob.ar   # Usuario EJE CLOUD
-EJE_CLOUD_PASSWORD=contraseña             # Contraseña EJE CLOUD
-CLAUDE_MODEL=claude-sonnet-4-6            # Modelo de IA
-BROWSER_HEADLESS=true                     # Modo sin ventana del navegador
+GEMINI_API_KEY=AIza...                              # API Key de Google Gemini
+EJE_CLOUD_URL=https://ejecloud.jusbaires.gob.ar    # URL de EJE CLOUD
+EJE_CLOUD_USER=usuario@jusbaires.gob.ar            # Usuario EJE CLOUD
+EJE_CLOUD_PASSWORD=contraseña                       # Contraseña EJE CLOUD
+GEMINI_MODEL=gemini-2.0-flash                       # Modelo de IA
+BROWSER_HEADLESS=true                               # Modo sin ventana del navegador
 ```
 
 ## Arquitectura
@@ -93,6 +93,6 @@ Documentación interactiva: `http://localhost:8000/docs`
 ## Tecnología
 
 - **Backend**: Python + FastAPI
-- **IA**: Claude (Anthropic) con Tool Use
+- **IA**: Gemini (Google) con Function Calling
 - **Navegador**: Playwright (Chromium) — automatización de EJE CLOUD
 - **Documentos**: Jinja2 + plantillas HTML institucionales

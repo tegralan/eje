@@ -3,8 +3,8 @@ from pydantic import Field
 
 
 class Settings(BaseSettings):
-    anthropic_api_key: str = Field(..., env="ANTHROPIC_API_KEY")
-    claude_model: str = Field("claude-sonnet-4-6", env="CLAUDE_MODEL")
+    gemini_api_key: str = Field(..., env="GEMINI_API_KEY")
+    gemini_model: str = Field("gemini-2.0-flash", env="GEMINI_MODEL")
 
     eje_cloud_url: str = Field("https://ejecloud.jusbaires.gob.ar", env="EJE_CLOUD_URL")
     eje_cloud_user: str = Field("", env="EJE_CLOUD_USER")
