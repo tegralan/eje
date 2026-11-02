@@ -60,9 +60,20 @@ extension/
 "Hacé click en el botón Guardar"
 ```
 
+## Alcance y privacidad
+
+La extensión solo se inyecta en `https://ejecloud.jusbaires.gob.ar/*`. El texto que se envía al asistente se transmite a Google Gemini mediante la API Key configurada. No envíes expedientes, datos personales ni información reservada sin autorización institucional y una política de uso aprobada.
+
+La extensión puede leer la página y extraer tablas. Antes de hacer clic o completar un campo, solicita confirmación porque esas acciones podrían guardar o enviar datos.
+
+## Aplicación Python (experimental)
+
+El repositorio también contiene una aplicación separada en `app/`, con interfaz web, API FastAPI y navegador Playwright. No forma parte del flujo de instalación de la extensión ni está conectada a ella. Se conserva como prototipo experimental; no la expongas en una red ni la uses con credenciales o datos reales sin una revisión de seguridad.
+
+Para iniciarla localmente, completá `GEMINI_API_KEY` en `.env` y ejecutá `scripts/start.sh`. El servidor escucha solo en `127.0.0.1:8000`. El archivo `.env` contiene secretos y no debe subirse al repositorio.
+
 ## Tecnología
 
 - **Extensión**: Chrome Extension Manifest V3
-- **IA**: Google Gemini con Function Calling (via REST API)
-- **Integración**: Content script que lee/controla el DOM de EJE CLOUD directamente
-- **Sin servidor**: todo corre en el navegador, sin backend externo
+- **IA de la extensión**: Google Gemini con Function Calling (API directa desde el navegador)
+- **Aplicación experimental**: Python, FastAPI y Playwright

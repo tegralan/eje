@@ -17,7 +17,7 @@ fi
 if [ ! -f ".env" ]; then
     echo "⚠ Archivo .env no encontrado. Copiando desde .env.example..."
     cp .env.example .env
-    echo "→ Editá el archivo .env con tu ANTHROPIC_API_KEY y credenciales de EJE CLOUD"
+    echo "→ Editá .env y completá GEMINI_API_KEY. No compartas ese archivo."
     echo ""
 fi
 
@@ -39,4 +39,4 @@ echo ""
 echo "Iniciando servidor EJE CLOUD IA en http://localhost:8000"
 echo ""
 
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn app.main:app --host 127.0.0.1 --port 8000

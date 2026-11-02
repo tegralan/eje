@@ -97,6 +97,10 @@ async function clickElement(texto) {
 
   if (!match) return `No se encontró el elemento con texto: "${texto}"`;
 
+  if (!window.confirm(`La IA solicita hacer clic en “${match.innerText.trim()}”. Esto puede guardar o enviar información en EJE CLOUD. ¿Querés continuar?`)) {
+    return "Acción cancelada por el usuario.";
+  }
+
   match.click();
   await wait(800);
   return `Click realizado en: "${match.innerText.trim()}"`;
@@ -118,6 +122,10 @@ async function fillField(selectorText, valor) {
   });
 
   if (!match) return `No se encontró el campo: "${selectorText}"`;
+
+  if (!window.confirm(`La IA solicita completar “${selectorText}” con “${valor}”. ¿Confirmás esta acción?`)) {
+    return "Acción cancelada por el usuario.";
+  }
 
   match.focus();
   if (match.tagName === "SELECT") {
@@ -162,10 +170,17 @@ async function searchInPage(termino) {
 }
 
 function navigateTo(path) {
-  const base = window.location.origin;
-  const url = base + (path.startsWith("/") ? path : "/" + path);
-  window.location.href = url;
-  return `Navegando a: ${url}`;
+  let url;
+  try {
+    url = new URL(path, window.location.origin);
+  } catch {
+    return "Ruta inválida.";
+  }
+  if (url.origin !== window.location.origin) {
+    return "La navegación fuera de EJE CLOUD fue bloqueada.";
+  }
+  window.location.href = url.href;
+  return `Navegando a: ${url.href}`;
 }
 
 function wait(ms) {

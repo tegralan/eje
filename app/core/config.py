@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     eje_cloud_user: str = Field("", env="EJE_CLOUD_USER")
     eje_cloud_password: str = Field("", env="EJE_CLOUD_PASSWORD")
 
-    host: str = Field("0.0.0.0", env="HOST")
+    host: str = Field("127.0.0.1", env="HOST")
     port: int = Field(8000, env="PORT")
     debug: bool = Field(False, env="DEBUG")
 

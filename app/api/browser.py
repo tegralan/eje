@@ -1,4 +1,6 @@
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import Optional
 import logging
 
 from app.core.eje_browser import get_browser, shutdown_browser
@@ -9,16 +11,21 @@ router = APIRouter(prefix="/api/browser", tags=["browser"])
 logger = logging.getLogger(__name__)
 
 
+class LoginRequest(BaseModel):
+    usuario: Optional[str] = None
+    password: Optional[str] = None
+
+
 @router.post("/login", response_model=SessionInfo)
-async def login(usuario: str = None, password: str = None):
+async def login(request: LoginRequest):
     """Autentica en EJE CLOUD con las credenciales configuradas o las proporcionadas."""
     try:
         browser = await get_browser()
-        success = await browser.login(usuario, password)
+        success = await browser.login(request.usuario, request.password)
         return SessionInfo(
             session_id="browser-session",
             autenticado=success,
-            usuario=usuario or settings.eje_cloud_user,
+            usuario=request.usuario or settings.eje_cloud_user,
             modulo_activo="inicio",
         )
     except Exception as e:
