@@ -213,11 +213,11 @@ async function doLogin() {
     indicator.className = 'status-dot connecting';
 
     try {
-        const params = new URLSearchParams();
-        if (user) params.append('usuario', user);
-        if (pass) params.append('password', pass);
-
-        const res = await fetch(`/api/browser/login?${params}`, { method: 'POST' });
+        const res = await fetch('/api/browser/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario: user || null, password: pass || null })
+        });
         const data = await res.json();
 
         if (data.autenticado) {
